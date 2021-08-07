@@ -22,7 +22,7 @@ setup(
     description='A light weight Python library for the Spotify Web API',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author="@plamere",
+    author="lc3817",
     author_email="lc3817@ic.ac.uk",
     url='https://spotipy.readthedocs.org/',
     install_requires=[
