@@ -33,4 +33,4 @@ setup(
     tests_require=test_reqs,
     extras_require=extra_reqs,
     license='LICENSE',
-    packages=['spotipy'])
+    packages=['spotipyLC'])
