@@ -17,13 +17,13 @@ extra_reqs = {
 }
 
 setup(
-    name='spotipy',
-    version='2.18.0',
+    name='spotipyLC',
+    version='1.0.0',
     description='A light weight Python library for the Spotify Web API',
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="@plamere",
-    author_email="paul@echonest.com",
+    author_email="lc3817@ic.ac.uk",
     url='https://spotipy.readthedocs.org/',
     install_requires=[
         'requests>=2.25.0',
