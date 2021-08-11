@@ -167,7 +167,8 @@ class SpotifyClientCredentials(SpotifyAuthBase):
         proxies=None,
         requests_session=True,
         requests_timeout=None,
-        cache_handler=None
+        cache_handler=None,
+        save_to_cache=False,
     ):
         """
         Creates a Client Credentials Flow Manager.
@@ -193,6 +194,7 @@ class SpotifyClientCredentials(SpotifyAuthBase):
                               getting and saving cached authorization tokens.
                               Optional, will otherwise use `CacheFileHandler`.
                               (takes precedence over `cache_path` and `username`)
+              * save_to_cache: Should the token_info be saved to a cache?, default is False
 
         """
 
@@ -237,7 +239,7 @@ class SpotifyClientCredentials(SpotifyAuthBase):
 
         token_info = self._request_access_token()
         token_info = self._add_custom_values_to_token_info(token_info)
-        self.cache_handler.save_token_to_cache(token_info)
+        self.cache_handler.save_token_to_cache(token_info) if self.save_to_cache else pass
         return token_info if as_dict else token_info["access_token"]
 
     def _request_access_token(self):
@@ -559,7 +561,7 @@ class SpotifyOAuth(SpotifyAuthBase):
             response.raise_for_status()
             token_info = response.json()
             token_info = self._add_custom_values_to_token_info(token_info)
-            self.cache_handler.save_token_to_cache(token_info)
+            self.cache_handler.save_token_to_cache(token_info) if self.save_to_cache else pass
             return token_info if as_dict else token_info["access_token"]
         except requests.exceptions.HTTPError as http_error:
             self._handle_oauth_error(http_error)
@@ -590,7 +592,7 @@ class SpotifyOAuth(SpotifyAuthBase):
             token_info = self._add_custom_values_to_token_info(token_info)
             if "refresh_token" not in token_info:
                 token_info["refresh_token"] = refresh_token
-            self.cache_handler.save_token_to_cache(token_info)
+            self.cache_handler.save_token_to_cache(token_info) if self.save_to_cache else pass
             return token_info
         except requests.exceptions.HTTPError as http_error:
             self._handle_oauth_error(http_error)
@@ -621,7 +623,7 @@ class SpotifyOAuth(SpotifyAuthBase):
                       "save_token_to_cache method.",
                       DeprecationWarning
                       )
-        self.cache_handler.save_token_to_cache(token_info)
+        self.cache_handler.save_token_to_cache(token_info) if self.save_to_cache else pass
         return None
 
 
@@ -923,7 +925,7 @@ class SpotifyPKCE(SpotifyAuthBase):
             response.raise_for_status()
             token_info = response.json()
             token_info = self._add_custom_values_to_token_info(token_info)
-            self.cache_handler.save_token_to_cache(token_info)
+            self.cache_handler.save_token_to_cache(token_info) if self.save_to_cache else pass
             return token_info["access_token"]
         except requests.exceptions.HTTPError as http_error:
             self._handle_oauth_error(http_error)
@@ -955,7 +957,7 @@ class SpotifyPKCE(SpotifyAuthBase):
             token_info = self._add_custom_values_to_token_info(token_info)
             if "refresh_token" not in token_info:
                 token_info["refresh_token"] = refresh_token
-            self.cache_handler.save_token_to_cache(token_info)
+            self.cache_handler.save_token_to_cache(token_info) if self.save_to_cache else pass
             return token_info
         except requests.exceptions.HTTPError as http_error:
             self._handle_oauth_error(http_error)
@@ -993,7 +995,7 @@ class SpotifyPKCE(SpotifyAuthBase):
                       "save_token_to_cache method.",
                       DeprecationWarning
                       )
-        self.cache_handler.save_token_to_cache(token_info)
+        self.cache_handler.save_token_to_cache(token_info) if self.save_to_cache else pass
         return None
 
 
@@ -1138,7 +1140,7 @@ class SpotifyImplicitGrant(SpotifyAuthBase):
         else:
             token_info = self.get_auth_response(state)
         token_info = self._add_custom_values_to_token_info(token_info)
-        self.cache_handler.save_token_to_cache(token_info)
+        self.cache_handler.save_token_to_cache(token_info) if self.save_to_cache else pass
 
         return token_info["access_token"]
 
@@ -1252,7 +1254,7 @@ class SpotifyImplicitGrant(SpotifyAuthBase):
                       "and use the CacheFileHandler's save_token_to_cache method.",
                       DeprecationWarning
                       )
-        self.cache_handler.save_token_to_cache(token_info)
+        self.cache_handler.save_token_to_cache(token_info) if self.save_to_cache else pass
         return None
 
 
